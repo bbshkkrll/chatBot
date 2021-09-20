@@ -37,6 +37,6 @@ public class InteractionConsole {
     }
 
     public static void printResult() {
-        System.out.println("Игра окончена! Количество верных ответов " + Repository.correctAnswer + "/5" + " Молоде *A*Y*E*" );
+        System.out.println(String.format("Игра окончена! Количество верных ответов %s/5, Молодец!", Repository.correctAnswer));
     }
 }
