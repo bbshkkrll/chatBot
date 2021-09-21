@@ -1,19 +1,18 @@
 package com.company;
 
-import java.util.Locale;
 import java.util.Scanner;
 
 public class InteractionConsole {
     public static void printHelp() {
-        System.out.println(Repository.commands.get(0).reference);
+        System.out.println(Repository.commandsArr[0].reference);
     }
 
     public static void startQuiz() {
-        System.out.println(Repository.commands.get(1).reference);
+        System.out.println(Repository.commandsArr[1].reference);
     }
 
     public static String printQuestionGetAnswer(int number) {
-        System.out.println(Repository.questions.get(number).question);
+        System.out.println(Repository.questionsArr[number].question);
 
         return new Scanner(System.in).nextLine().toLowerCase();
     }
@@ -31,12 +30,12 @@ public class InteractionConsole {
     }
 
     public static String printContinueGetAnswer() {
-        System.out.println("Продолжаем? Да/Нет");
+        System.out.println("Заканчиваем? Да/Нет");
 
         return new Scanner(System.in).nextLine().toLowerCase();
     }
 
     public static void printResult() {
-        System.out.println(String.format("Игра окончена! Количество верных ответов %s/5, Молодец!", Repository.correctAnswer));
+        System.out.println(String.format("Игра окончена! Количество верных ответов %s/5, Молодец!", Repository.correctAnswerCount));
     }
 }

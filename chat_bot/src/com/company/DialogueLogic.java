@@ -6,28 +6,37 @@ public class DialogueLogic {
 
     public static void messageHandler() {
 
+        bot:
         while (true) {
             var userInput = new Scanner(System.in).nextLine().toLowerCase();
 
             if (userInput.equals("help")) {
                 InteractionConsole.printHelp();
             }
-
+            if (userInput.equals("exit")) {
+                if (InteractionConsole.printContinueGetAnswer().equals("да")) {
+                    break bot;
+                }
+            }
             if (userInput.equals("play")) {
                 InteractionConsole.startQuiz();
                 quiz:
-                for (var i = 0; i < Repository.questions.size(); i++) {
+                for (var i = 0; i < Repository.questionsArr.length; i++) {
                     var userAnswer = InteractionConsole.printQuestionGetAnswer(i);
-                    if (userAnswer.equals(Repository.questions.get(i).answer)) {
-
+                    if (userAnswer.equals(Repository.questionsArr[i].answer)) {
                         InteractionConsole.printTrue();
-                        Repository.correctAnswer++;
+                        Repository.correctAnswerCount++;
                     } else if (userAnswer.equals("play")) {
                         InteractionConsole.printGameIsStarted();
                         i--;
+                    } else if (userAnswer.equals("exit")) {
+                        if (InteractionConsole.printContinueGetAnswer().equals("нет")) {
+                            i--;
+                            continue;
+                        } else break bot;
                     } else if (userAnswer.equals("help")) {
                         InteractionConsole.printHelp();
-                        if (InteractionConsole.printContinueGetAnswer().toLowerCase().equals("да")) {
+                        if (InteractionConsole.printContinueGetAnswer().equals("нет")) {
                             i--;
                             continue;
                         } else break quiz;
