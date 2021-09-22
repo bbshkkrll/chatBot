@@ -6,19 +6,20 @@ public class DialogueLogic {
 
     public static void messageHandler() {
 
+
+        InteractionConsole.printHello();
+
         bot:
         while (true) {
             var userInput = new Scanner(System.in).nextLine().toLowerCase();
 
             if (userInput.equals("help")) {
                 InteractionConsole.printHelp();
-            }
-            if (userInput.equals("exit")) {
+            } else if (userInput.equals("exit")) {
                 if (InteractionConsole.printContinueGetAnswer().equals("да")) {
                     break bot;
                 }
-            }
-            if (userInput.equals("play")) {
+            } else if (userInput.equals("play")) {
                 InteractionConsole.startQuiz();
                 quiz:
                 for (var i = 0; i < Repository.questionsArr.length; i++) {
@@ -44,6 +45,8 @@ public class DialogueLogic {
                 }
 
                 InteractionConsole.printResult();
+            } else {
+                InteractionConsole.printUnknownCommand();
             }
         }
     }
