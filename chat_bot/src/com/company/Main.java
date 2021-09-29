@@ -3,6 +3,7 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        ConsoleBot.messageHandler();
+        var bot = new Bot();
+        bot.messageHandler();
     }
 }
