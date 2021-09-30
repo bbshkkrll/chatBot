@@ -9,10 +9,11 @@ public class Bot {
         while (true) {
             var userInput = new Scanner(System.in).nextLine().toLowerCase();
             var reply = Handler.handleUserInput(userInput);
-            if (reply.equals("Выходим")) //найти другой вариант
-                break;
 
             System.out.println(reply);
+
+            if (reply.equals("Выходим"))
+                return;
         }
     }
 }
