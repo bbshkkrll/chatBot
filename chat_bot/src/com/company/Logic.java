@@ -14,7 +14,7 @@ public class Logic {
             return commands.exit.reference;
         else
             for (int i = 0; i < singers.singerArr.length; i++)
-                if (userInput.equals(singers.singerArr[i].name.toLowerCase()))
+                if (userInput.toLowerCase().equals(singers.singerArr[i].name.toLowerCase()))
                     return (singers.singerArr[i].songs);
         return ("Я такого не знаю.");
     }

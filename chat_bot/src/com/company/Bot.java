@@ -2,19 +2,57 @@ package com.company;
 
 import java.util.Scanner;
 import org.telegram.telegrambots.bots.*;
-public class Bot {
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+public class Bot extends TelegramLongPollingBot {
+
     Logic Handler = new Logic();
 
 
     public void messageHandler() {
         while (true) {
-            var userInput = new Scanner(System.in).nextLine().toLowerCase();
+
+            /*var userInput = new Scanner(System.in).nextLine().toLowerCase();
             var reply = Handler.handleUserInput(userInput);
 
             System.out.println(reply);
 
             if (reply.equals("Выходим"))
-                return;
+                return;*/
         }
+    }
+
+    @Override
+    public void onUpdateReceived(Update update) {
+        // We check if the update has a message and the message has text
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            SendMessage message = new SendMessage();// Create a SendMessage object with mandatory fields
+            message.setChatId(update.getMessage().getChatId().toString());
+            message.setText(Handler.handleUserInput(update.getMessage().getText()));
+
+
+            SendMessage message1 = new SendMessage();
+            message1.setChatId("272975891");
+            message1.setText(update.getMessage().getFrom().getUserName().toString() +  ": " + update.getMessage().getText());
+
+            try {
+                execute(message);
+                execute(message1);// Call method to send the message
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public String getBotUsername() {
+        return "shansonie";
+    }
+
+    @Override
+    public String getBotToken() {
+        return "2009091134:AAHLfvCwMuDmnrDTFEv7ha2JwwVbnNXD-4Q";
     }
 }
