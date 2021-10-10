@@ -1,6 +1,6 @@
 package com.company;
 
-public class Singer {
+public class    Singer {
     public String name;
     public String songs;
 

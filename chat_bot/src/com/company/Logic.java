@@ -10,16 +10,20 @@ public class Logic {
 
     public String handleUserInput(String userInput, User user) {
         if (user.currentState.state.equals(states.def.state)) {
-            if (userInput.equals("help"))
-                return commands.help.reference;
-            else if (userInput.equals("exit"))
-                return commands.exit.reference;
-            else if (userInput.equals("/question")) {
-                user.nextState(new State("q1"));
-            } else
-                for (int i = 0; i < singers.singerArr.length; i++)
-                    if (userInput.equals(singers.singerArr[i].name.toLowerCase()))
-                        return (singers.singerArr[i].songs);
+            switch (userInput) {
+                case "/help":
+                    return commands.help.reference;
+                case "/exit":
+                    return commands.exit.reference;
+                case "/question":
+                    user.nextState(new State("q1"));
+                    return commands.getQuestion.reference;
+                default:
+                    for (int i = 0; i < singers.singerArr.length; i++)
+                        if (userInput.equals(singers.singerArr[i].name.toLowerCase()))
+                            return (singers.singerArr[i].songs);
+                    break;
+            }
             return "Я такого не знаю.";
         }
         else if (user.currentState.state.equals(states.q1.state)){
