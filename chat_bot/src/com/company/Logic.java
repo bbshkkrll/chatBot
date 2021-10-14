@@ -29,8 +29,8 @@ public class Logic {
         else if (user.currentState.state.equals(states.q1.state)){
             user.nextState(new State("default"));
             if (userInput.equals("шансон"))
-                return "Работаем, братья";
-            else return "Твоё место у параши, сынок";
+                return "Ответ верный";
+            else return "Ответ неправильный";
         }
         else {
             return "...";
