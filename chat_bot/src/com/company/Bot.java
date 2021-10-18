@@ -1,10 +1,15 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import org.telegram.telegrambots.bots.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class Bot extends TelegramLongPollingBot {
@@ -39,14 +44,23 @@ public class Bot extends TelegramLongPollingBot {
             message.setChatId(update.getMessage().getChatId().toString());
             message.setText(Handler.handleUserInput(update.getMessage().getText().toLowerCase(), users.userState.get(chatID)));
 
-
-//            SendMessage message1 = new SendMessage();
-//            message1.setChatId("272975891");
-//            message1.setText(update.getMessage().getFrom().getUserName().toString() +  ": " + update.getMessage().getText());
+            ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+            List<KeyboardRow> keyboardRowList = new ArrayList<>();
+            replyKeyboardMarkup.setResizeKeyboard(true);
+            replyKeyboardMarkup.setSelective(true);
+            KeyboardRow keyboardRow = new KeyboardRow();
+            KeyboardButton button = new KeyboardButton();
+            KeyboardButton button1 = new KeyboardButton();
+            button.setText("Шансон");
+            button1.setText("Фонк");
+            keyboardRow.add(button);
+            keyboardRow.add(button1);
+            keyboardRowList.add(keyboardRow);
+            replyKeyboardMarkup.setKeyboard(keyboardRowList);
+            message.setReplyMarkup(replyKeyboardMarkup);
 
             try {
                 execute(message);
-               // execute(message1);// Call method to send the message
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
@@ -60,6 +74,6 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "2009091134:AAHLfvCwMuDmnrDTFEv7ha2JwwVbnNXD-4Q";
+        return System.getenv("TOKEN");
     }
 }

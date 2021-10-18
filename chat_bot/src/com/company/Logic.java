@@ -1,38 +1,29 @@
 package com.company;
 
-import java.util.Locale;
-
 public class Logic {
 
     CommandsRepository commands = new CommandsRepository();
     SingerRepository singers = new SingerRepository();
-    StateRepo states = new StateRepo();
 
     public String handleUserInput(String userInput, User user) {
-        if (user.currentState.state.equals(states.def.state)) {
+        if (user.currentState == User.State.Default) {
             switch (userInput) {
                 case "/help":
                     return commands.help.reference;
                 case "/exit":
                     return commands.exit.reference;
                 case "/question":
-                    user.nextState(new State("q1"));
+                    user.nextState(User.State.Question);
                     return commands.getQuestion.reference;
                 default:
-                    for (int i = 0; i < singers.singerArr.length; i++)
-                        if (userInput.equals(singers.singerArr[i].name.toLowerCase()))
-                            return (singers.singerArr[i].songs);
-                    break;
+                    return singers.getSinger(userInput);
             }
-            return "Я такого не знаю.";
-        }
-        else if (user.currentState.state.equals(states.q1.state)){
-            user.nextState(new State("default"));
-            if (userInput.equals("шансон"))
+        } else if (user.currentState == User.State.Question) {
+            user.nextState(User.State.Default);
+            if (userInput.equals("шансон") || userInput.equals("фонк"))
                 return "Ответ верный";
             else return "Ответ неправильный";
-        }
-        else {
+        } else {
             return "...";
         }
     }
