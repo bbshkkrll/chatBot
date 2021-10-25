@@ -2,8 +2,6 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
 import org.telegram.telegrambots.bots.*;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -17,19 +15,6 @@ public class Bot extends TelegramLongPollingBot {
     Logic Handler = new Logic();
     UserRepo users = new UserRepo();
 
-//    public void messageHandler() {
-//        while (true) {
-//
-//            /*var userInput = new Scanner(System.in).nextLine().toLowerCase();
-//            var reply = Handler.handleUserInput(userInput);
-//
-//            System.out.println(reply);
-//
-//            if (reply.equals("Выходим"))
-//                return;*/
-//        }
-//    }
-
     @Override
     public void onUpdateReceived(Update update) {
         // We check if the update has a message and the message has text
@@ -37,7 +22,7 @@ public class Bot extends TelegramLongPollingBot {
 
             var chatID = update.getMessage().getChatId();
 
-            if (!users.userState.containsKey(chatID)){
+            if (!users.userState.containsKey(chatID)) {
                 users.userState.put(chatID, new User(chatID));
             }
             SendMessage message = new SendMessage();// Create a SendMessage object with mandatory fields

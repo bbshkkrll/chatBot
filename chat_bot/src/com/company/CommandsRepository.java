@@ -10,4 +10,8 @@ public class CommandsRepository {
             new Command("/exit", "Выходим"),
             new Command("/question", "Какой твой любимый жанр?"),
     };
+
+    public Command getHelp() {
+        return help;
+    }
 }
