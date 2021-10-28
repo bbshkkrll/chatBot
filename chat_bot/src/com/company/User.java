@@ -5,8 +5,9 @@ public class User {
 
     public State currentState;
 
-    enum State{
+    enum State {
         Default,
+        GetArtist,
         Question,
     }
 

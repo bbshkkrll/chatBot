@@ -8,6 +8,11 @@ public class Logic {
     public String handleUserInput(String userInput, User user) {
         if (user.currentState == User.State.Default) {
             switch (userInput) {
+                case "/start":
+                    return "Добро пожаловать в обитель шансона!";
+                case "/get_artist":
+                    user.nextState(User.State.GetArtist);
+                    return "Введите название исполнителя \uD83C\uDFA4\uD83C\uDFB5";
                 case "/help":
                     return commands.help.reference;
                 case "/exit":
@@ -23,8 +28,9 @@ public class Logic {
             if (userInput.equals("шансон") || userInput.equals("фонк"))
                 return "Ответ верный";
             else return "Ответ неправильный";
-        } else {
-            return "...";
-        }
+        } else if (user.currentState == User.State.GetArtist) {
+            user.nextState(User.State.Default);
+            return SearchArtistsExample.searchArtists(userInput);
+        } else return "Ушёл в никуда";
     }
 }
