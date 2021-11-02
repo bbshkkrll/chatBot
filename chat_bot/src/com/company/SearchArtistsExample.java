@@ -10,8 +10,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 public class SearchArtistsExample {
-    private static final String accessToken = "BQB1fU_U3KbsH5v2j-uCkWxD3AjRlOh2sIF6frh4utb-R1OhfxDNka0Pd-I7_Nc7iMg_QKpOdQTcxqRIX9bvjlVQCrFDW8rtKx6exV-ImyLqLnMVHdnS6Rs6XqfVzxecOqUdR_5CXHkYc4L4qavaZIGsAZVfgOiRHwm3dYHhnJL73jh0MzO-";
-    
+    private static final String accessToken = "BQALXeaZIM5Cj-0gaifbgSw6E7ebZQTblwWeqRQZ7xEABRfMjtHhR6DPYp2baQyLhj_6LHpM_tBQ4xkFpB7bvFzX1wxgEsxir2soey1PgNYsdLsn10Qr92yD6ytGHs-nLO007z_nly0-fXV0LNViqTIPMsAy5pMChOiFFvRFhw";
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setAccessToken(accessToken)
             .build();

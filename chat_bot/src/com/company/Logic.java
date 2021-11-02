@@ -4,6 +4,7 @@ public class Logic {
 
     CommandsRepository commands = new CommandsRepository();
     SingerRepository singers = new SingerRepository();
+    ValueParser parser = new ValueParser();
 
     public String handleUserInput(String userInput, User user) {
         if (user.currentState == User.State.Default) {
@@ -20,6 +21,9 @@ public class Logic {
                 case "/question":
                     user.nextState(User.State.Question);
                     return commands.getQuestion.reference;
+                case "/get_rate":
+                    user.nextState(User.State.GetRate);
+                    return "\uD83D\uDCB5 Введите название валюты в формате USD \uD83D\uDCB5";
                 default:
                     return singers.getSinger(userInput);
             }
@@ -31,6 +35,13 @@ public class Logic {
         } else if (user.currentState == User.State.GetArtist) {
             user.nextState(User.State.Default);
             return SearchArtistsExample.searchArtists(userInput);
+        } else if (user.currentState == User.State.GetRate) {
+            user.nextState(User.State.Default);
+            if (userInput.toLowerCase().equals("usd"))
+                return "За 1₽ дают " + parser.getRequesrt().rates.USD + "$";
+            if (userInput.toLowerCase().equals("eur"))
+                return "За 1₽ дают " + parser.getRequesrt().rates.EUR + "€";
+            return "Таких валют не знаем";
         } else return "Ушёл в никуда";
     }
 }

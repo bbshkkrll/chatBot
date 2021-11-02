@@ -8,7 +8,7 @@ public class User {
     enum State {
         Default,
         GetArtist,
-        Question,
+        Question, GetRate,
     }
 
     User(Long chatID) {
