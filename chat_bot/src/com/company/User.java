@@ -2,13 +2,12 @@ package com.company;
 
 public class User {
     public Long chatID;
-
     public State currentState;
-
+    public double value;
     enum State {
         Default,
-        GetArtist,
-        Question, GetRate,
+        GetRate,
+        SetValue,
     }
 
     User(Long chatID) {

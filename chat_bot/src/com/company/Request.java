@@ -9,7 +9,4 @@ public class Request {
     public String base;
     public Rates rates;
 
-    public Request() {
-
-    }
 }
