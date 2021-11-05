@@ -9,7 +9,7 @@ public class Logic {
         if (user.currentState == User.State.Default) {
             switch (userInput) {
                 case "/start":
-                    return "Добро пожаловать в обитель шансона!";
+                    return "Привет! Я знаю актуальные курсы популярных валют и умею конвертировать сумму!\nЧтобы узнать больше напиши /help.";
                 case "/help":
                     return commands.help.reference;
                 case "/exit":
@@ -25,16 +25,16 @@ public class Logic {
         } else if (user.currentState == User.State.SetValue) {
             try {
                 var value = Double.parseDouble(userInput);
-                if  (value < 0) {
+                if  (value <= 0) {
                     user.nextState(User.State.Default);
-                    return "Неправильная сумма :(";
+                    return "Некорректный ввод :(";
                 }
                 user.value = value;
                 System.out.println(user.value);
             } catch (NumberFormatException e) {
                 user.nextState(User.State.Default);
                 System.out.println(e.getMessage());
-                return "Неправильная сумма :(";
+                return "Некоректный ввод :(";
             }
             user.nextState(User.State.GetRate);
             return "Введите международный код валюты, например USD";
