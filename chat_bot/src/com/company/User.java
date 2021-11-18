@@ -2,20 +2,20 @@ package com.company;
 
 public class User {
     public Long chatID;
-    public State currentState;
+    private State currentState;
     public double value;
-    enum State {
-        Default,
-        GetRate,
-        SetValue,
-    }
 
     User(Long chatID) {
         this.chatID = chatID;
-        this.currentState = State.Default;
+        this.currentState = State.DEFAULT;
     }
 
-    public void nextState(State nextState) {
+    public State getCurrentState(){
+        return currentState;
+    }
+
+    public void setNextState(State nextState) {
         currentState = nextState;
     }
+
 }

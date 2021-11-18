@@ -5,10 +5,21 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.HashMap;
+
 public class Bot extends TelegramLongPollingBot {
 
-    Logic handler = new Logic();
-    UserRepo users = new UserRepo();
+    private final Logic logic;
+    private final String token;
+    private final String botName;
+    private HashMap<Long, User> userState;
+
+    public Bot(Logic logic, String token, String botName, HashMap<Long, User> userState) {
+        this.logic = logic;
+        this.token = token;
+        this.botName = botName;
+        this.userState = userState;
+    }
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -16,12 +27,12 @@ public class Bot extends TelegramLongPollingBot {
 
             var chatID = update.getMessage().getChatId();
 
-            if (!users.userState.containsKey(chatID)) {
-                users.userState.put(chatID, new User(chatID));
+            if (!userState.containsKey(chatID)) {
+                userState.put(chatID, new User(chatID));
             }
             SendMessage message = new SendMessage();
             message.setChatId(update.getMessage().getChatId().toString());
-            message.setText(handler.handleUserInput(update.getMessage().getText().toLowerCase(), users.userState.get(chatID)));
+            message.setText(logic.handleUserInput(update.getMessage().getText().toLowerCase(), userState.get(chatID)));
 
             try {
                 execute(message);
@@ -33,11 +44,11 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "shansonie";
+        return botName;
     }
 
     @Override
     public String getBotToken() {
-        return System.getenv("TOKEN");
+        return token;
     }
 }
