@@ -1,30 +1,40 @@
-package com.company;
+package bot;
+
+import bot.database.User;
+import bot.database.UsersRepo;
 
 public class Logic {
 
-    RequestParser parser = new RequestParser();
+    public UsersRepo users;
+    private final RequestParser parser;
+
+    public Logic(UsersRepo users, RequestParser parser) {
+        this.users = users;
+        this.parser = parser;
+    }
+
 
     public String handleUserInput(String userInput, User user) {
         if (user.getCurrentState() == State.WAIT_VALUE_IN_RUBBLES) {
             try {
                 var value = Double.parseDouble(userInput);
                 if (value <= 0) {
-                    user.setNextState(State.DEFAULT);
+                    user.currentState = State.DEFAULT;
                     return "Некорректный ввод";
                 }
                 user.value = value;
                 System.out.println(user.value);
             } catch (NumberFormatException e) {
-                user.setNextState(State.DEFAULT);
+                user.currentState = State.DEFAULT;
                 return "Некоректный ввод";
             }
-            user.setNextState(State.WAIT_NAME_OF_CURRENCY);
+            user.currentState = State.WAIT_NAME_OF_CURRENCY;
             return "Введите международный код валюты, например USD";
         } else if (user.getCurrentState() == State.WAIT_NAME_OF_CURRENCY) {
-            user.setNextState(State.DEFAULT);
+            user.currentState = State.DEFAULT;
             var rates = parser.getRequest();
             if (rates.containsKey(userInput.toUpperCase()))
-                return String.format("За %.2f₽ вы получите %.2f %s", user.value,
+                return String.format("За %.2f RUB вы получите %.2f %s", user.value,
                         rates.get(userInput.toUpperCase()) * user.value, userInput.toUpperCase());
             else return "Я не знаю курс данной валюты";
         }
@@ -36,7 +46,7 @@ public class Logic {
             case "/exit":
                 return "Эта функция пока недоступна. Мы (я) работаем ((работаю)) над этим.";
             case "/rate":
-                user.setNextState(State.WAIT_VALUE_IN_RUBBLES);
+                user.currentState = State.WAIT_VALUE_IN_RUBBLES;
                 return "Введите сумму в рублях (для разделения целой и дробной частей используйте точку)";
             case "/currencies":
                 return "Доступен актуальный курс данных валют:\nUSD, EUR, CNY, CAD, UAH, CZK, JPY";

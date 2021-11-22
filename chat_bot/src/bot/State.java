@@ -1,4 +1,4 @@
-package com.company;
+package bot;
 
 public enum State {
     WAIT_VALUE_IN_RUBBLES,
