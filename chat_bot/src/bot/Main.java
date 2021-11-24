@@ -13,10 +13,12 @@ public class Main {
 
 
     public static void main(String[] args) {
-        var users = new UsersRepo();
-//        var posts = new PostRepo();
-//        posts.initializePosts();
-        Bot bot = new Bot(new Logic(users, new RequestParser()), System.getenv("TOKEN"), "@shansonie", users);
+        UsersRepo users = new UsersRepo();
+        PostRepo posts = new PostRepo();
+        RequestParser parser = new RequestParser();
+        Logic logic = new Logic(users, posts, parser);
+
+        Bot bot = new Bot(users, logic, System.getenv("TOKEN"), System.getenv("BOT_NAME"));
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);

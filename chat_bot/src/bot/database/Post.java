@@ -2,7 +2,6 @@ package bot.database;
 
 public class Post {
     private String title;
-    private String text;
     private double minValue;
     private double maxValue;
     private String currency;
@@ -11,14 +10,12 @@ public class Post {
 
     }
 
-    public Post(String text, String subText) {
-        this.title = text;
-        this.text = subText;
+    public Post(String title) {
+        this.title = title;
     }
 
-    public Post(String text, String subText, double minValue, double maxValue, String currency) {
-        this.title = text;
-        this.text = subText;
+    public Post(String title, double minValue, double maxValue, String currency) {
+        this.title = title;
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.currency = currency;
@@ -28,8 +25,8 @@ public class Post {
         return title;
     }
 
-    public String getText() {
-        return text;
+    public void setTitle(String title){
+        this.title = title;
     }
 
     public double getMinValue() {

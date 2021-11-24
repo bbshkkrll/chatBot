@@ -11,9 +11,9 @@ public class Bot extends TelegramLongPollingBot {
     private final Logic logic;
     private final String token;
     private final String botName;
-    private UsersRepo users;
+    private final UsersRepo users;
 
-    public Bot(Logic logic, String token, String botName, UsersRepo users) {
+    public Bot(UsersRepo users, Logic logic, String token, String botName) {
         this.logic = logic;
         this.token = token;
         this.botName = botName;
@@ -26,11 +26,11 @@ public class Bot extends TelegramLongPollingBot {
             var userName = update.getMessage().getChat().getUserName();
             var chatID = update.getMessage().getChatId();
             var user = users.getUserOrCreate(chatID, userName);
+            var userInput = update.getMessage().getText().toLowerCase();
 
             SendMessage message = new SendMessage();
-            message.setChatId(update.getMessage().getChatId()
-                    .toString());
-            message.setText(logic.handleUserInput(update.getMessage().getText().toLowerCase(), user));
+            message.setChatId(chatID.toString());
+            message.setText(logic.handleUserInput(userInput, user));
 
             users.put(user);
 

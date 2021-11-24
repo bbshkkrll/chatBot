@@ -3,10 +3,12 @@ package bot.database;
 import bot.State;
 
 public class User {
-    public Long chatID;
-    public State currentState;
-    public double value;
-    public String userName;
+    private Long chatID;
+    private State currentState;
+    private String userName;
+    private String lastCurrency;
+    private double valueInCurrency;
+    private double value;
 
     public User() {
 
@@ -26,9 +28,41 @@ public class User {
     public State getCurrentState() {
         return currentState;
     }
-//
-//    public void setNextState(State nextState) {
-//        currentState = nextState;
-//    }
+
+    public void setCurrentState(State nextState) {
+        currentState = nextState;
+    }
+
+    public Long getChatID() {
+        return chatID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setLastCurrency(String lastCurrency) {
+        this.lastCurrency = lastCurrency;
+    }
+
+    public String getLastCurrency() {
+        return lastCurrency;
+    }
+
+    public void setValueInCurrency(double value) {
+        this.valueInCurrency = value;
+    }
+
+    public double getValueInCurrency() {
+        return valueInCurrency;
+    }
 
 }

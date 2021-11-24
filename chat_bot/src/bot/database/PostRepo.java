@@ -1,24 +1,32 @@
 package bot.database;
 
 import com.mongodb.MongoClientSettings;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
+
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Sorts;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.pojo.ClassModel;
+import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.conversions.Bson;
 
-import java.util.Arrays;
+import java.util.*;
+
+import static com.mongodb.client.model.Filters.*;
 
 public class PostRepo {
 
     private MongoCollection<Post> posts;
 
     public PostRepo() {
+        var classModel = ClassModel.builder(Post.class);
         var codecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
                 CodecRegistries.fromProviders(PojoCodecProvider.builder()
                         .register(
-                                ClassModel.builder(Post.class).enableDiscriminator(true).build()
+                                classModel.conventions(Arrays.asList(Conventions.SET_PRIVATE_FIELDS_CONVENTION)).build()
                         ).automatic(true)
                         .build()));
 
@@ -28,14 +36,25 @@ public class PostRepo {
 
     }
 
-    public Post getPostByValue(double userValue) {
-        var post = posts.find(Filters.and(Filters.gte("minValue", userValue),
-                Filters.lte("maxValue", userValue))).first();
-        return post == null ? new Post("Такого факта еще нет", "Работаем над этим") : post;
+    public Post getPostByValue(String currency, double userValue) {
+        var filter = and(lte("minValue", userValue), gte("maxValue", userValue),
+                eq("currency", currency.toUpperCase()));
+        var post = getRandomPost(posts.find(filter));
+        return post == null ? new Post("Данных пока нет") : post;
     }
 
-    public void initializePosts(){
-        var posts1 = new PostDB();
-        posts.insertMany(Arrays.asList(posts1.posts));
+//    public void initializePosts() {
+//        var posts1 = new PostDB();
+//        posts.insertMany(Arrays.asList(posts1.posts));
+//    }
+
+    public Post getRandomPost(FindIterable<Post> posts) {
+        var iterator = posts.iterator();
+        var list = new ArrayList<Post>();
+
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        return list.isEmpty() ? null : list.get(new Random().nextInt(list.size()));
     }
 }
