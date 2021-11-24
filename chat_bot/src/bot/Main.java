@@ -1,6 +1,8 @@
-package com.company;
+package bot;
 
-import com.wrapper.spotify.SpotifyApi;
+import bot.database.PostRepo;
+import bot.database.User;
+import bot.database.UsersRepo;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -9,9 +11,14 @@ import java.util.HashMap;
 
 public class Main {
 
-    public static void main(String[] args) {
 
-        Bot bot = new Bot(new Logic(), System.getenv("TOKEN"), "@shansonie", new HashMap<>());
+    public static void main(String[] args) {
+        UsersRepo users = new UsersRepo();
+        PostRepo posts = new PostRepo();
+        RequestParser parser = new RequestParser();
+        Logic logic = new Logic(users, posts, parser);
+
+        Bot bot = new Bot(users, logic, System.getenv("TOKEN"), System.getenv("BOT_NAME"));
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(bot);

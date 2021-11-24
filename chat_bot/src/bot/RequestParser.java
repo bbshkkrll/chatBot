@@ -1,4 +1,4 @@
-package com.company;
+package bot;
 
 import com.google.gson.Gson;
 
