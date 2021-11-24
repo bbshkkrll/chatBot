@@ -8,8 +8,8 @@ import java.util.Locale;
 
 public class Logic {
 
-    public UsersRepo users;
-    private PostRepo posts;
+    public final UsersRepo users;
+    private final PostRepo posts;
     private final RequestParser parser;
 
     public Logic(UsersRepo users, PostRepo posts, RequestParser parser) {
@@ -28,7 +28,7 @@ public class Logic {
                     return "Некорректный ввод";
                 }
                 user.setValue(value);
-                System.out.println(user.getValue());
+
             } catch (NumberFormatException e) {
                 user.setCurrentState(State.DEFAULT);
                 return "Некоректный ввод";
