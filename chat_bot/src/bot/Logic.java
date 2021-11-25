@@ -58,14 +58,14 @@ public class Logic {
             case "/start":
                 return "Привет! Я знаю актуальные курсы популярных валют и умею конвертировать сумму!\nЧтобы узнать больше напиши /help.";
             case "/help":
-                return "Бот умеет конвертировать рубли во все популярные валюты. \nЧтобы посмотреть все доступные валюты напиши /currencies.";
+                return "Бот умеет конвертировать рубли во все популярные валюты. \nЧтобы посмотреть все доступные валюты напиши /currencies. \n Чтобы узнать курс валюты напиши /rate и следуй указаниям бота.";
             case "/exit":
                 return "Эта функция пока недоступна. Мы (я) работаем ((работаю)) над этим.";
             case "/rate":
                 user.setCurrentState(State.WAIT_VALUE_IN_RUBBLES);
                 return "Введите сумму в рублях (для разделения целой и дробной частей используйте точку)";
             case "/currencies":
-                return "Доступен актуальный курс данных валют:\nUSD, EUR, CNY, CAD, UAH, CZK, JPY";
+                return "Доступен актуальный курс данных валют:\nAUD, AZN, GBP, AMD, BYN, BGN, BRL, HUF, HKD, DKK, USD, EUR, INR, KZT, CAD, KGS, CNY, MDL, NOK, PLN, RON, XDR, SGD, TJS, TRY, TMT, UZS, UAH, CZK, SEK, CHF, ZAR, KRW, JPY";
             default:
                 return "Я не знаю как на это ответить.";
         }
