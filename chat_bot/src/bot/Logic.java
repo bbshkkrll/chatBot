@@ -4,17 +4,15 @@ import bot.database.PostRepo;
 import bot.database.User;
 import bot.database.UsersRepo;
 
-import java.util.Locale;
-
 public class Logic {
 
     public final UsersRepo users;
     private final PostRepo posts;
-    private final RequestParser parser;
+    private final Request request;
 
-    public Logic(UsersRepo users, PostRepo posts, RequestParser parser) {
+    public Logic(UsersRepo users, PostRepo posts, Request request) {
         this.users = users;
-        this.parser = parser;
+        this.request = request;
         this.posts = posts;
     }
 
@@ -36,7 +34,7 @@ public class Logic {
             user.setCurrentState(State.WAIT_NAME_OF_CURRENCY);
             return "Введите международный код валюты, например USD";
         } else if (user.getCurrentState() == State.WAIT_NAME_OF_CURRENCY) {
-            var rates = parser.getRequest();
+            var rates = request.getRequest();
             if (rates.containsKey(userInput.toUpperCase())) {
                 user.setCurrentState(State.WAIT_ANSWER_TO_QUESTION);
                 var valueInCurrency = rates.get(userInput.toUpperCase()) * user.getValue();
@@ -51,7 +49,7 @@ public class Logic {
             }
         } else if (user.getCurrentState() == State.WAIT_ANSWER_TO_QUESTION) {
             user.setCurrentState(State.DEFAULT);
-            if (userInput.toLowerCase().equals("да")) {
+            if (userInput.equalsIgnoreCase("да")) {
                 var post = posts.getPostByValue(user.getLastCurrency(), user.getValueInCurrency());
                 return post.getTitle();
             } else return "Как вам угодно.";

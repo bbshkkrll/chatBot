@@ -27,7 +27,6 @@ public class Bot extends TelegramLongPollingBot {
             var chatID = update.getMessage().getChatId();
             var user = users.getUserOrCreate(chatID, userName);
             var userInput = update.getMessage().getText().toLowerCase();
-
             SendMessage message = new SendMessage();
             message.setChatId(chatID.toString());
             message.setText(logic.handleUserInput(userInput, user));

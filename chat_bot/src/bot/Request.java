@@ -12,7 +12,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RequestParser {
+public class Request {
+
+    private final Gson g = new Gson();
+
     public Map<String, Double> getRequest() {
         try {
             final String urlString = "https://www.cbr-xml-daily.ru/latest.js";
@@ -31,14 +34,12 @@ public class RequestParser {
             }
 
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
             StringBuilder response = new StringBuilder();
+            String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
-
-            var g = new Gson();
 
             Map<String, Object> request = g.fromJson(response.toString(), new TypeToken<Map<String, Object>>() {
             }.getType());
