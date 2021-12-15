@@ -16,7 +16,7 @@ import java.util.List;
 public class UsersRepo {
     private MongoCollection<User> users;
 
-    public UsersRepo() {
+    public UsersRepo(String mongoUri) {
         var codecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
                 CodecRegistries.fromProviders(PojoCodecProvider.builder()
                         .register(
@@ -24,7 +24,7 @@ public class UsersRepo {
                         ).automatic(true)
                         .build()));
 
-        users = MongoClients.create(System.getenv("MONGO_URI")).getDatabase("bot_data")
+        users = MongoClients.create(mongoUri).getDatabase("bot_data")
                 .withCodecRegistry(codecRegistry)
                 .getCollection("bot_users", User.class);
     }

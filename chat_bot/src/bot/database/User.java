@@ -10,6 +10,7 @@ public class User {
     private double valueInCurrency;
     private double value;
 
+
     public User() {
 
     }
@@ -24,6 +25,7 @@ public class User {
         this.userName = userName;
         this.currentState = State.DEFAULT;
     }
+
 
     public State getCurrentState() {
         return currentState;
@@ -48,6 +50,7 @@ public class User {
     public double getValue() {
         return value;
     }
+
 
     public void setLastCurrency(String lastCurrency) {
         this.lastCurrency = lastCurrency;

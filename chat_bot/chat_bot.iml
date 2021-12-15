@@ -20,5 +20,9 @@
     <orderEntry type="library" name="se.michaelthelin.spotify.web.api.java" level="project" />
     <orderEntry type="library" name="google.code.gson" level="project" />
     <orderEntry type="library" name="mongo-java-driver-3.12.10" level="project" />
+    <orderEntry type="library" name="google.api.client" level="project" />
+    <orderEntry type="library" name="google.oauth.client.jetty" level="project" />
+    <orderEntry type="library" name="google.apis.api.services.sheets" level="project" />
+    <orderEntry type="library" name="jackson-databind-2.12.4-javadoc" level="project" />
   </component>
 </module>

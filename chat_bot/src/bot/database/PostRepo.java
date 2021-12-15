@@ -21,7 +21,7 @@ public class PostRepo {
 
     private MongoCollection<Post> posts;
 
-    public PostRepo() {
+    public PostRepo(String mongoUri) {
         var classModel = ClassModel.builder(Post.class);
         var codecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
                 CodecRegistries.fromProviders(PojoCodecProvider.builder()
@@ -30,7 +30,7 @@ public class PostRepo {
                         ).automatic(true)
                         .build()));
 
-        posts = MongoClients.create(System.getenv("MONGO_URI")).getDatabase("bot_data")
+        posts = MongoClients.create(mongoUri).getDatabase("bot_data")
                 .withCodecRegistry(codecRegistry)
                 .getCollection("posts", Post.class);
 
