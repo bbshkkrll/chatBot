@@ -1,5 +1,7 @@
 package bot.database;
 
+import java.util.List;
+
 public class Post {
     private String title;
     private double minValue;
@@ -21,12 +23,15 @@ public class Post {
         this.currency = currency;
     }
 
-    public String getTitle() {
-        return title;
+    public Post(Object title, Object minValue, Object maxValue, Object currency) {
+        this.title = title.toString();
+        this.minValue = Double.parseDouble(minValue.toString());
+        this.maxValue = Double.parseDouble(maxValue.toString());
+        this.currency = currency.toString();
     }
 
-    public void setTitle(String title){
-        this.title = title;
+    public String getTitle() {
+        return title;
     }
 
     public double getMinValue() {
@@ -39,6 +44,10 @@ public class Post {
 
     public String getCurrency() {
         return currency;
+    }
+
+    public List<Object> getAsList() {
+        return List.of(title, minValue, maxValue, currency);
     }
 
 }
