@@ -27,7 +27,7 @@ public class SheetsService {
     private final String APPLICATION_NAME;
     private final String SPREADSHEET_ID;
     private final File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), ".credentials/sheets.googleapis.com.json");
+            System.getProperty("user.home"), System.getenv("CREDENTIALS_DIR"));
 
     private final List<Post> posts;
 
@@ -118,8 +118,7 @@ public class SheetsService {
                 new SheetsService(System.getenv("APPLICATION_NAME"),
                         System.getenv("SPREADSHEET_ID"));
 
-
-        var appendBody = new ValueRange().setValues(Arrays.asList(new PostRepo().postsAsList));
+        ValueRange appendBody = new ValueRange().setValues(Arrays.asList(new PostRepo().postsAsList));
 
         sheetsService.appendPosts(appendBody, sheetsService.sheetsService);
 

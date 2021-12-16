@@ -31,8 +31,8 @@ public class Bot extends TelegramLongPollingBot {
 
         message.setText(reply.getMessage());
         message.setChatId(user.getChatID().toString());
-        if (reply.getButtons() != null)
-            createKeyboard(message, reply.getButtons());
+
+        createKeyboard(message, reply.getButtons());
 
         try {
             execute(message);
@@ -42,6 +42,10 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     private void createKeyboard(SendMessage message, String[] buttons) {
+        if (buttons == null) {
+            return;
+        }
+
         ArrayList<ArrayList<String>> keyboard = new ArrayList<>() {
         };
         ArrayList<KeyboardRow> keyboardRows = new ArrayList<>();

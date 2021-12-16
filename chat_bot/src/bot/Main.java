@@ -18,22 +18,31 @@ public class Main {
 
 
     public static void main(String[] args) throws GeneralSecurityException, IOException {
-        UsersRepo users = new UsersRepo(System.getenv("MONGO_URI"));
-        PostRepo posts = new PostRepo(System.getenv("MONGO_URI"));
+
+        UsersRepo users = new UsersRepo(
+                System.getenv("MONGO_URI"));
+        PostRepo posts = new PostRepo(
+                System.getenv("MONGO_URI"));
 
         CurrencyService currencyService =
-                new CurrencyService(System.getenv("CURRENCY_URI"));
+                new CurrencyService(
+                        System.getenv("CURRENCY_URI"));
 
         SheetsService sheetsService =
-                new SheetsService(System.getenv("APPLICATION_NAME"),
+                new SheetsService(
+                        System.getenv("APPLICATION_NAME"),
                         System.getenv("SPREADSHEET_ID"));
 
-        Logic logic = new Logic(users, posts,
-                sheetsService, currencyService);
+        Logic logic = new Logic(
+                users,
+                posts,
+                sheetsService,
+                currencyService);
 
 
         Bot bot = new Bot(users, logic,
-                System.getenv("TOKEN"), System.getenv("BOT_NAME"));
+                System.getenv("TOKEN"),
+                System.getenv("BOT_NAME"));
 
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);

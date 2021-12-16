@@ -20,6 +20,7 @@ public class Logic {
             "EUR",
             "JPY",
             "CZK",
+            "KZT"
     };
 
     private final String[] defaultAnswers = new String[]{
