@@ -33,7 +33,7 @@ public class Logic {
             "1000",
             "5000",
     };
-    
+
 
     public Logic(UsersRepo users, PostRepo posts, SheetsService sheetsService, CurrencyService currencyService) {
         this.users = users;
@@ -65,14 +65,23 @@ public class Logic {
             try {
                 var rates = currencyService.getCurrency();
                 if (rates.containsKey(userInput.toUpperCase())) {
-                    user.setCurrentState(State.WAIT_ANSWER_TO_QUESTION);
                     var valueInCurrency = rates.get(userInput.toUpperCase()) * user.getValue();
                     user.setLastCurrency(userInput.toUpperCase());
                     user.setValueInCurrency(valueInCurrency);
-                    return new Reply(defaultAnswers,
-                            String.format("За %.2f RUB вы получите %.2f %s", user.getValue(),
-                                    valueInCurrency, userInput.toUpperCase()) +
-                                    "\s\n Желаете узнать, что можно купить на данную сумму?");
+
+                    if (sheetsService.checkPostExist(valueInCurrency, user.getLastCurrency())) {
+                        user.setCurrentState(State.WAIT_ANSWER_TO_QUESTION);
+                        return new Reply(defaultAnswers,
+                                String.format("За %.2f RUB вы получите %.2f %s", user.getValue(),
+                                        valueInCurrency, userInput.toUpperCase()) +
+                                        "\s\n Желаете узнать, что можно купить на данную сумму?");
+                    } else {
+                        user.setCurrentState(State.DEFAULT);
+                        return new Reply(null, String.format("За %.2f RUB вы получите %.2f %s", user.getValue(),
+                                valueInCurrency, userInput.toUpperCase()));
+                    }
+
+
                 } else {
                     return new Reply(defaultCurrencies,
                             "Я не знаю курс данной валюты. Введите другое название.");

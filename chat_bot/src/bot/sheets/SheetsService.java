@@ -26,15 +26,18 @@ public class SheetsService {
 
     private final String APPLICATION_NAME;
     private final String SPREADSHEET_ID;
-    private static final File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), ".credentials/2/sheets.googleapis.com-java-quickstart.json");
+    private final File DATA_STORE_DIR = new java.io.File(
+            System.getProperty("user.home"), ".credentials/sheets.googleapis.com.json");
 
-    private List<Post> posts;
+    private final List<Post> posts;
+
+    private final Sheets sheetsService;
 
     public SheetsService(String APPLICATION_NAME, String SPREADSHEET_ID) throws GeneralSecurityException, IOException {
         this.APPLICATION_NAME = APPLICATION_NAME;
         this.SPREADSHEET_ID = SPREADSHEET_ID;
-        this.posts = createPostsList(getSheetsService());
+        sheetsService = getSheetsService();
+        this.posts = createPostsList(sheetsService);
     }
 
 
@@ -100,15 +103,25 @@ public class SheetsService {
 
     }
 
+    public boolean checkPostExist(Double value, String currency) {
+        try {
+            getPostByRandom(value, currency);
+            return true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        }
+    }
+
     public static void main(String[] args) throws IOException, GeneralSecurityException {
 
-        SheetsService sheetsService = new SheetsService("Currency Daily",
-                "1GRsHCqfjalUtgxqCe60R98W_En3VG8lSNCi9ZwBJDkE");
+        SheetsService sheetsService =
+                new SheetsService(System.getenv("APPLICATION_NAME"),
+                        System.getenv("SPREADSHEET_ID"));
 
 
-//        var appendBody = new ValueRange().setValues(Arrays.asList(new PostRepo().postsAsList));
-//
-//        sheetsService.appendPosts(appendBody, sheetsService.sheetsService);
+        var appendBody = new ValueRange().setValues(Arrays.asList(new PostRepo().postsAsList));
+
+        sheetsService.appendPosts(appendBody, sheetsService.sheetsService);
 
     }
 
