@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.security.GeneralSecurityException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,8 +26,7 @@ public class SheetsService {
 
     private final String APPLICATION_NAME;
     private final String SPREADSHEET_ID;
-    private final File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.dir"), System.getenv("CREDENTIALS_DIR"));
+    private final File DATA_STORE_DIR = new java.io.File("CREDENTIALS_DIR");
 
     public List<Post> posts;
 
