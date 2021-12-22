@@ -34,7 +34,7 @@ public class SheetsService {
 
     private final Sheets sheetsService;
 
-    public SheetsService(String APPLICATION_NAME, String SPREADSHEET_ID) throws GeneralSecurityException, IOException {
+    public SheetsService(String APPLICATION_NAME, String SPREADSHEET_ID) throws Exception {
         this.APPLICATION_NAME = APPLICATION_NAME;
         this.SPREADSHEET_ID = SPREADSHEET_ID;
         sheetsService = getSheetsService();
@@ -42,7 +42,7 @@ public class SheetsService {
     }
 
 
-    private Credential authorize() throws IOException, GeneralSecurityException {
+    private Credential authorize() throws Exception {
         InputStream in = SheetsService.class.getResourceAsStream("/credentials.json");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
 
@@ -56,7 +56,7 @@ public class SheetsService {
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
-    public Sheets getSheetsService() throws IOException, GeneralSecurityException {
+    public Sheets getSheetsService() throws Exception {
         Credential credential = authorize();
         return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(), JacksonFactory.getDefaultInstance(), credential)
                 .setApplicationName(APPLICATION_NAME)
@@ -101,7 +101,7 @@ public class SheetsService {
 
     }
 
-    public static void main(String[] args) throws IOException, GeneralSecurityException {
+    public static void main(String[] args) throws Exception {
 
         SheetsService sheetsService =
                 new SheetsService(System.getenv("APPLICATION_NAME"),

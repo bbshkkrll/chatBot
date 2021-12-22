@@ -14,7 +14,7 @@ import java.security.GeneralSecurityException;
 public class Main {
 
 
-    public static void main(String[] args) throws GeneralSecurityException, IOException {
+    public static void main(String[] args) throws Exception {
 
         UsersRepo users = new UsersRepo(
                 System.getenv("MONGO_URI"));
