@@ -28,7 +28,7 @@ public class SheetsService {
     private final String APPLICATION_NAME;
     private final String SPREADSHEET_ID;
     private final File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), System.getenv("CREDENTIALS_DIR"));
+            System.getProperty("user.dir"), System.getenv("CREDENTIALS_DIR"));
 
     public List<Post> posts;
 
