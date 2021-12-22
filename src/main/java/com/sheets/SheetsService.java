@@ -41,7 +41,7 @@ public class SheetsService {
 
 
     private Credential authorize() throws Exception {
-        InputStream in = SheetsService.class.getResourceAsStream("/credentials.json");
+        InputStream in = SheetsService.class.getResourceAsStream("");
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JacksonFactory.getDefaultInstance(), new InputStreamReader(in));
 
         List<String> scopes = Arrays.asList(SheetsScopes.SPREADSHEETS, SheetsScopes.DRIVE);
