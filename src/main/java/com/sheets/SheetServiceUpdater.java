@@ -2,6 +2,7 @@ package com.sheets;
 
 
 import java.io.IOException;
+import java.lang.reflect.Executable;
 import java.security.GeneralSecurityException;
 
 public class SheetServiceUpdater implements Runnable {
@@ -24,15 +25,13 @@ public class SheetServiceUpdater implements Runnable {
                 sheetsService.updateOrCreatePostsList(sheetsService.getSheetsService());
                 if (sheetsService.posts.size() > lastPostsSize) {
                     System.out.printf("Добавлено %s постов", sheetsService.posts.size() - lastPostsSize);
-                }
-                else if (sheetsService.posts.size() < lastPostsSize){
-                    System.out.printf("Удалено %s постов",  lastPostsSize - sheetsService.posts.size());
-                }
-                else {
+                } else if (sheetsService.posts.size() < lastPostsSize) {
+                    System.out.printf("Удалено %s постов", lastPostsSize - sheetsService.posts.size());
+                } else {
                     System.out.println("Нет изменнений");
                 }
                 lastPostsSize = sheetsService.posts.size();
-            } catch (IOException | GeneralSecurityException | InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
