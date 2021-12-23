@@ -24,9 +24,9 @@ public class SheetServiceUpdater implements Runnable {
                 Thread.sleep(3_000);
                 sheetsService.updateOrCreatePostsList(sheetsService.getSheetsService());
                 if (sheetsService.posts.size() > lastPostsSize) {
-                    System.out.printf("Добавлено %s постов", sheetsService.posts.size() - lastPostsSize);
+                    System.out.printf("Добавлено %s постов\n", sheetsService.posts.size() - lastPostsSize);
                 } else if (sheetsService.posts.size() < lastPostsSize) {
-                    System.out.printf("Удалено %s постов", lastPostsSize - sheetsService.posts.size());
+                    System.out.printf("Удалено %s постов\n", lastPostsSize - sheetsService.posts.size());
                 } else {
                     System.out.println("Нет изменнений");
                 }
